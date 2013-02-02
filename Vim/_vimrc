@@ -1,0 +1,585 @@
+"Set my own variables
+let s:ruby_path = 'C:/Ruby191/bin'
+let g:Powerline_symbols = 'compatible'
+let mapleader = ","
+let g:mapleader = ","
+let tabsize=2
+let backupDir='~/VimBackup'
+let g:EasyMotion_leader_key = '<Leader>'
+let g:EasyMotion_mapping_n = '_n'
+let g:EasyMotion_mapping_t = '_t'
+let g:mwHistAdd = ''
+let g:mwAutoSaveMarks = 1
+let g:mwAutoLoadMarks = 1
+let g:vundle_default_git_proto = 'http'
+
+"------------- Start of settings of Vundle -----------
+"set langmenu=zh_tw.utf-8
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+Bundle 'gmarik/vundle'
+" My Bundles here:
+" original repos on github
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'ervandew/supertab'
+Bundle 'scrooloose/nerdtree'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'godlygeek/tabular'
+Bundle 'pangloss/vim-javascript'
+Bundle 'aperezdc/vim-template'
+Bundle 'Yggdroot/indentLine'
+Bundle 'scrooloose/nerdcommenter'
+" vim-scripts repos
+Bundle 'fontsize.vim'
+Bundle 'repmo.vim'
+Bundle 'taglist.vim'
+Bundle 'snipMate'
+Bundle 'surround.vim'
+Bundle 'ZoomWin'
+"Bundle 'SearchComplete' Bug when using replacement
+Bundle 'Mark--Karkat'
+Bundle 'Command-T'
+Bundle 'delimitMate.vim'
+"Bundle 'AutoClose'
+filetype plugin indent on   
+"-------------- End of settings of Vundle -----------
+
+colorscheme torte
+set fencs=ucs-bom,utf-8,big5,euc-jp,gbk,euc-kr,utf-bom,iso8859-1,utf-16le
+let $LANG='zh_TW.UTF-8'
+set langmenu=zh_tw.utf-8
+set encoding=utf-8
+set fenc=utf-8
+set termencoding=utf8
+
+"reload menu with UTF-8 encoding
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+
+execute "set softtabstop=".tabsize
+execute "set shiftwidth=".tabsize
+execute "set backupdir=".backupDir
+execute "set directory=".backupDir
+set autoread
+set wildmenu
+set winaltkeys=no
+set t_Co=256
+set ambiwidth=double
+set cursorline
+set nrformats=octal,hex,alpha
+set tabpagemax=30
+set nowrap
+set sidescroll=5
+set listchars+=precedes:<,extends:>
+set guioptions+=h
+set ruler
+set nu
+set backup
+set expandtab
+set bg=dark
+set nocompatible
+set autoindent
+set incsearch
+set showmode
+set showmatch
+set ffs=unix,dos
+set linebreak
+set switchbuf=usetab
+set diffopt=filler,vertical
+set showtabline=2  "Always show tabline
+set guioptions-=e  "Use text-only tabline
+set guioptions-=T  "remove tool bar
+set guioptions-=m  "remove menu bar
+set guioptions-=r  "remove right scroll bar
+set completeopt=longest,menu "omnicomplete
+
+" Font settings
+if has("gui_running")
+  if has("gui_gtk2")
+    " To install: sudo apt-get install ttf-inconsolata
+    set guifont=Inconsolata\ Medium\ 15
+  elseif has("x11")
+    " Also for GTK 1
+    set guifont=*-lucidatypewriter-medium-r-normal-*-*-180-*-*-m-*-*
+  elseif has("gui_win32")
+    set guifont=Consolas:h14
+  endif
+endif
+
+" Define our own mappings
+" Select a word for surrond.vim
+map <A-w> ysiw
+" Open file mapping
+map gf :wincmd gf<CR>
+map <C-F> :vertical wincmd f<CR>
+
+map <A-q> gg=G``
+map <C-C> :tabnew<CR>
+map <F3> :browse confirm saveas<CR>
+map <F4> :close<CR>
+map <F5> :tabnew $MYVIMRC<CR>
+map <F8> :set invcursorline<CR>
+" Press Space to turn off highlighting and clear any message already displayed.
+nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+" Toggle menu bar and right scroll bar
+nnoremap <C-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
+nnoremap <C-F2> :if &go=~#'r'<Bar>set go-=r<Bar>else<Bar>set go+=r<Bar>endif<CR>
+nnoremap <C-F3> :if &go=~#'b'<Bar>set go-=b<Bar>else<Bar>set go+=b<Bar>endif<CR>
+" Highlight current line after cursor moves
+nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
+" Mappings For jumping between tabs
+for i in range(9)
+  let j = i+1
+  execute "inoremap <C-k".j."> <C-O><k".j.">gt"
+  execute "noremap <C-k".j."> <k".j.">gt"
+endfor
+
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+nunmap <C-A>
+nunmap <C-V>
+behave mswin
+
+set keymodel-=stopsel "We need to put this after mswin stuff to use arrow key in visual mode
+set viminfo+=!
+
+" We do not trust the following function for some reasons
+" set diffexpr=MyDiff()
+function! MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let eq = ''
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      let cmd = '""' . $VIMRUNTIME . '\diff"'
+      let eq = '"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+endfunction
+
+"Settings of taglist
+let Tlist_Ctags_Cmd = 'C:/Windows/System32/ctags.exe'
+let Tlist_Use_Right_Window=1
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+let Tlist_Inc_Winwidth = 0
+let Tlist_WinWidth = 25
+set tags=./tags,tags;
+nnoremap <F12> :TlistToggle<CR>
+map <C-Right> :tabnext<CR>
+map <C-l> :tabnext<CR>
+map <C-Left>  :tabprevious<CR>
+map <C-h>  :tabprevious<CR>
+map <C-]> viwy:tab tag <C-R>"<CR>
+"End of Settings of taglist
+
+"Need NERDTree plugin first
+map <F2> :NERDTreeToggle<CR>
+
+"Define our own highlight group
+" We must shorten the cursor highlight group to let command-T works!
+highlight clear Cursor
+highlight Cursor gui=bold guifg=Black guibg=Green
+highlight Comment guibg=blue guifg=white ctermfg=gray ctermbg=darkblue
+highlight clear CursorLine
+highlight CursorLine guibg=Grey30 ctermbg=238
+"highlight CursorLine term=underline cterm=underline gui=underline guibg=Gray
+
+"Highlight tab so we can know the indent of new code
+syntax match Tab /\t/
+highlight Tab gui=underline guifg=blue ctermbg=blue 
+
+"options for folding
+set foldmethod=syntax
+set foldcolumn=1
+highlight Folded guibg=darkgrey guifg=yellow
+highlight FoldColumn guibg=darkgrey guifg=white
+
+"Status line power up, now using vim-powerline plugin!
+set laststatus=2
+"set statusline=%4*%<\ %1*[%F]
+"set statusline+=%4*\ %5*[%{&encoding} " encoding
+"set statusline+=%{&fileformat}%{\"\".((exists(\"+bomb\")\ &&\ &bomb)?\",BOM\":\"\").\"\"}]%m
+"set statusline+=%4*%=\ %6*%y%4*\ %3*%l%4*,\ %3*%c%4*\ \<\ %2*%P%4*\ \>
+highlight User1 guifg=red
+highlight User2 gui=underline guifg=green
+highlight User3 gui=underline guifg=yellow
+highlight User4 gui=underline guifg=white
+highlight User5 guifg=cyan
+highlight User6 guifg=white
+
+"Enable code highlight in a block
+function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
+  let ft=toupper(a:filetype)
+  let group='textGroup'.ft
+  if exists('b:current_syntax')
+    let s:current_syntax=b:current_syntax
+    " Remove current syntax definition, as some syntax files (e.g. cpp.vim)
+    " do nothing if b:current_syntax is defined.
+    unlet b:current_syntax
+  endif
+  execute 'syntax include @'.group.' syntax/'.a:filetype.'.vim'
+  try
+    execute 'syntax include @'.group.' after/syntax/'.a:filetype.'.vim'
+  catch
+  endtry
+  if exists('s:current_syntax')
+    let b:current_syntax=s:current_syntax
+  else
+    unlet b:current_syntax
+  endif
+  execute 'syntax region textSnip'.ft.'
+        \ matchgroup='.a:textSnipHl.'
+        \ start="'.a:start.'" end="'.a:end.'"
+        \ contains=@'.group
+endfunction
+
+" Start the settings of autocmd
+if !exists("autocommands_loaded")
+  let autocommands_loaded = 1
+  " Define and reset augroup used in vimrc
+  augroup vimrc
+    autocmd!
+  augroup END
+
+  "Reload vimrc settings after save changed
+  "If we auto reload vimrc, the power-statusline would disappear!
+  augroup vimrc
+    au BufWritePost $MYVIMRC so $MYVIMRC
+    au BufWritePost $MYVIMRC call Pl#Load()
+  augroup END
+
+  augroup vimrc
+    let custom_priority = -20
+    "au GUIEnter * simalt ~x "maximize the initial Vim window
+    au BufRead,BufNewFile *.aspx set filetype=aspvbs
+    "highlight changes for matlab to octave
+    au BufRead,BufNewFile *.m hi link matlabComment NONE
+    au BufRead,BufNewFile *.m call matchadd("Comment", "\\#.*", custom_priority)
+    au BufRead,BufNewFile *.m call matchadd("matlabStatement", "endfor", custom_priority)
+    au BufRead,BufNewFile *.m call matchadd("matlabStatement", "endif", custom_priority)
+    au BufRead,BufNewFile *.m call matchadd("matlabStatement", "endwhile", custom_priority)
+    au BufRead,BufNewFile *.m call matchadd("matlabStatement", "endfunction", custom_priority)
+
+    au TabEnter,BufNew,BufWinEnter,WinEnter *.txt let txtmatch = []
+    au TabEnter,BufNew,BufWinEnter,WinEnter *.txt call add(txtmatch, matchadd("Special", "\\(^\\|\\( \\+\\)\\)[0-9]\\+\\..*$", custom_priority))
+    au TabEnter,BufNew,BufWinEnter,WinEnter *.txt call add(txtmatch, matchadd("VisualNOS", "\\(^\\|\\( \\+\\)\\)[A-Z]\\{1,1\\}\\..*$", custom_priority))
+    " Here is for reading dialog in Skype
+    au BufNew,BufWinEnter *.txt call add(txtmatch, matchadd("User2", "Person1:", custom_priority))
+    au BufNew,BufWinEnter *.txt call add(txtmatch, matchadd("User3", "Person2:", custom_priority))
+    au BufLeave *.txt call Deletematch(txtmatch)
+
+    au BufEnter * silent! lcd %:p:h "change working directory
+  augroup END
+
+  " save view (to restore fold later) and load automatically
+  set viewoptions-=options
+  set viewdir=~/.vim/view
+  augroup vimrc
+    autocmd BufWritePost *
+    \   if expand('%') != '' && &buftype !~ 'nofile'
+    \|    mkview
+    \|  endif
+    autocmd BufRead *
+    \   if expand('%') != '' && &buftype !~ 'nofile'
+    \|    silent loadview
+    \|  endif
+  augroup END
+
+  if (&diff==0)
+    "au BufReadPost * <buffer> tab ball
+    "au BufWinEnter <buffer> tab ball
+  endif
+endif
+" End of settings of autocmd
+
+"Start the settings of tabline
+set tabline=%!SetTabLine()
+
+function! SetTabLine()
+  " NOTE: left/right padding of each tab was hard coded as 1 space.
+  " NOTE: require Vim 7.3 strwidth() to display fullwidth text correctly.
+
+  " settings
+  let tabMinWidth = 0
+  let tabMaxWidth = 40
+  let tabMinWidthResized = 15
+  let tabScrollOff = 5
+  let tabEllipsis = '…'
+  let tabDivideEquel = 0
+
+  let s:tabLineTabs = []
+
+  let tabCount = tabpagenr('$')
+  let tabSel = tabpagenr()
+
+  " fill s:tabLineTabs with {n, filename, split, flag} for each tab
+  for i in range(tabCount)
+    let tabnr = i + 1
+    let buflist = tabpagebuflist(tabnr)
+    let winnr = tabpagewinnr(tabnr)
+    let bufnr = buflist[winnr - 1]
+
+    let filename = bufname(bufnr)
+    let filename = fnamemodify(filename, ':p:t')
+    let buftype = getbufvar(bufnr, '&buftype')
+    if filename == ''
+      if buftype == 'nofile'
+        let filename .= '[Scratch]'
+      else
+        let filename .= '[New]'
+      endif
+    endif
+    let split = ''
+    let winCount = tabpagewinnr(tabnr, '$')
+    if winCount > 1   " has split windows
+      let split .= winCount
+    endif
+    let flag = ''
+    if getbufvar(bufnr, '&modified')  " modified
+      let flag .= '+'
+    endif
+    if strlen(flag) > 0 || strlen(split) > 0
+      let flag .= ' '
+    endif
+
+    call add(s:tabLineTabs, {'n': tabnr, 'split': split, 'flag': flag, 'filename': filename})
+  endfor
+
+  " variables for final oupout
+  let s = ''
+  let l:tabLineTabs = deepcopy(s:tabLineTabs)
+
+  " overflow adjustment
+  " 1. apply min/max tabWidth option
+  if s:TabLineTotalLength(l:tabLineTabs) > &columns
+    unlet i
+    for i in l:tabLineTabs
+      let tabLength = s:CalcTabLength(i)
+      if tabLength < tabMinWidth
+        let i.filename .= repeat(' ', tabMinWidth - tabLength)
+      elseif tabMaxWidth > 0 && tabLength > tabMaxWidth
+        let reserve = tabLength - StrWidth(i.filename) + StrWidth(tabEllipsis)
+        if tabMaxWidth > reserve
+          let i.filename = StrCrop(i.filename, (tabMaxWidth - reserve), '~') . tabEllipsis
+        endif
+      endif
+    endfor
+  endif
+  " 2. try divide each tab equal-width
+  if tabDivideEquel
+    if s:TabLineTotalLength(l:tabLineTabs) > &columns
+      let divideWidth = max([tabMinWidth, tabMinWidthResized, &columns / tabCount, StrWidth(tabEllipsis)])
+      unlet i
+      for i in l:tabLineTabs
+        let tabLength = s:CalcTabLength(i)
+        if tabLength > divideWidth
+          let i.filename = StrCrop(i.filename, divideWidth - StrWidth(tabEllipsis), '~') . tabEllipsis
+        endif
+      endfor
+    endif
+  endif
+  " 3. ensure visibility of current tab 
+  let rhWidth = 0
+  let t = tabCount - 1
+  let rhTabStart = min([tabSel - 1, tabSel - tabScrollOff])
+  while t >= max([rhTabStart, 0])
+    let tab = l:tabLineTabs[t]
+    let tabLength = s:CalcTabLength(tab)
+    let rhWidth += tabLength
+    let t -= 1
+  endwhile
+  while rhWidth >= &columns
+    let tab = l:tabLineTabs[-1]
+    let tabLength = s:CalcTabLength(tab)
+    let lastTabSpace = &columns - (rhWidth - tabLength)
+    let rhWidth -= tabLength
+    if rhWidth > &columns
+      call remove(l:tabLineTabs, -1)
+    else
+      " add special flag (will be removed later) indicating that how many
+      " columns could be used for last displayed tab.
+      if tabSel <= tabScrollOff || tabSel < tabCount - tabScrollOff
+        let tab.flag .= '>' . lastTabSpace
+      endif
+    endif
+  endwhile
+
+  " final ouput
+  unlet i
+  for i in l:tabLineTabs
+    let tabnr = i.n
+
+    let split = ''
+    if strlen(i.split) > 0
+      if tabnr == tabSel
+        let split = '%#TabLineSplitNrSel#' . i.split .'%#TabLineSel#'
+      else
+        let split = '%#TabLineSplitNr#' . i.split .'%#TabLine#'
+      endif
+    endif
+
+    let text = ' ' . split . i.flag . i.filename . ' '
+
+    if i.n == l:tabLineTabs[-1].n
+      if match(i.flag, '>\d\+') > -1 || i.n < tabCount
+        let lastTabSpace = matchstr(i.flag, '>\zs\d\+')
+        let i.flag = substitute(i.flag, '>\d\+', '', '')
+        if lastTabSpace <= strlen(i.n)
+          if lastTabSpace == 0
+            let s = strpart(s, 0, strlen(s) - 1)
+          endif
+          let s .= '%#TabLineMore#>'
+          continue
+        else
+          let text = ' ' . i.split . i.flag . i.filename . ' '
+          let text = StrCrop(text, (lastTabSpace - strlen(i.n) - 1), '~') . '%#TabLineMore#>'
+          let text = substitute(text, ' ' . i.split, ' ' . split, '')
+        endif
+      endif
+    endif
+
+    let s .= '%' . tabnr . 'T'  " start of tab N
+
+    if tabnr == tabSel
+      let s .= '%#TabLineNrSel#' . tabnr . '%#TabLineSel#'
+    else
+      let s .= '%#TabLineNr#' . tabnr . '%#TabLine#'
+    endif
+
+    let s .= text
+
+  endfor
+
+  let s .= '%#TabLineFill#%T'
+  return s
+endf
+
+function! s:CalcTabLength(tab)
+  return strlen(a:tab.n) + 2 + strlen(a:tab.split) + strlen(a:tab.flag) + StrWidth(a:tab.filename)
+endf
+
+function! s:TabLineTotalLength(dict)
+  let length = 0
+  for i in (a:dict)
+    let length += strlen(i.n) + 2 + strlen(i.split) + strlen(i.flag) + StrWidth(i.filename)
+  endfor
+  return length
+endf
+
+function! StrWidth(str)
+  if exists('*strwidth')
+    return strwidth(a:str)
+  else
+    let strlen = strlen(a:str)
+    let mstrlen = strlen(substitute(a:str, ".", "x", "g"))
+    if strlen == mstrlen
+      return strlen
+    else
+      " Note: 暫不處理全形字（以下值不正確）
+      return strlen
+    endif
+  endif
+endf
+
+" }}}2   依字串長度（column 數）裁切多餘文字   {{{2
+function! StrCrop(str, len, ...)
+  let l:padChar = a:0 > 0 ? a:1 : ' '
+  if exists('*strwidth')
+    let text = substitute(a:str, '\%>' . a:len . 'c.*', '', '')
+    let remainChars = split(substitute(a:str, text, '', ''), '\zs')
+    while strwidth(text) < a:len
+      let longer = len(remainChars) > 0 ? (text . remove(remainChars, 0)) : text
+      if strwidth(longer) < a:len
+        let text = longer
+      else
+        let text .= l:padChar
+      endif
+    endwhile
+    return text
+  else
+    " Note: 暫不處理全形字（以下值不正確）
+    return substitute(a:str, '\%>' . a:len . 'c.*', '', '')
+  endif
+endf
+
+hi TabLine           cterm=underline ctermfg=15    ctermbg=242   gui=underline guibg=#6c6c6c guifg=White
+hi TabLineSel        cterm=bold      gui=NONE      guifg=cyan    guibg=black
+hi TabLineNr         cterm=underline ctermbg=238   guibg=#444444 guifg=#f1d7f0
+hi TabLineNrSel      cterm=bold      ctermfg=45    guifg=yellow
+hi TabLineFill       cterm=reverse   gui=reverse
+hi TabLineMore       cterm=underline ctermfg=White ctermbg=236   gui=underline guifg=White   guibg=#303030
+hi TabLineSplitNr    cterm=underline ctermfg=148 ctermbg=240   gui=underline,italic guifg=#afd700   guibg=#6c6c6c
+hi TabLineSplitNrSel cterm=NONE      ctermfg=148 ctermbg=236   gui=NONE,italic      guifg=#afd700   guibg=#303030
+"End of setting tabline
+
+"My function to delete a list of match
+function! Deletematch(matchList)
+  for i in (a:matchList)
+    silent! call matchdelete(i)
+  endfor 
+endfunction
+
+" function to search in visual block
+function! RangeSearch(direction)
+  call inputsave()
+  let g:srchstr = input(a:direction)
+  call inputrestore()
+  if strlen(g:srchstr) > 0
+    let g:srchstr = g:srchstr.
+          \ '\%>'.(line("'<")-1).'l'.
+          \ '\%<'.(line("'>")+1).'l'
+  else
+    let g:srchstr = ''
+  endif
+endfunction
+" Mapping for RangeSearch
+vnoremap <silent> / :<C-U>call RangeSearch('/')<CR>:if strlen(g:srchstr) > 0\|exec '/'.g:srchstr\|endif<CR>
+vnoremap <silent> ? :<C-U>call RangeSearch('?')<CR>:if strlen(g:srchstr) > 0\|exec '?'.g:srchstr\|endif<CR>
+" command PP: print lines like :p or :# but with with current search pattern highlighted
+command! -nargs=? -range -bar PP :call PrintWithSearchHighlighted(<line1>,<line2>,<q-args>)
+function! PrintWithSearchHighlighted(line1,line2,arg)
+  let line=a:line1
+  while line <= a:line2
+    echo ""
+    if a:arg =~ "#"
+      echohl LineNr
+      echo strpart(" ",0,7-strlen(line)).line."\t"
+      echohl None
+    endif
+    let l=getline(line)
+    let index=0
+    while 1
+      let b=match(l,@/,index)
+      if b==-1 |
+        echon strpart(l,index)
+        break
+      endif
+      let e=matchend(l,@/,index) |
+      echon strpart(l,index,b-index)
+      echohl Search
+      echon strpart(l,b,e-b)
+      echohl None
+      let index = e
+    endw
+    let line=line+1
+  endw
+endfunction
+" Use PrintWithSearchHighlighted to highlight results of internal [I, ]I
+nmap [I :execute 'g/\<' . expand( '<cword>' ) . '\>/PP #'<CR>
+nmap ]I :execute 'g/\<' . expand( '<cword>' ) . '\>/PP #'<CR>
