@@ -1,4 +1,8 @@
-config
+Config
 ======
 
-Used to organize configuration files of applications I use.
+Config is used to organize configuration files of applications I use.
+
+Applications
+------------
+* [Vim] (http://www.vim.org) -- vimrc
