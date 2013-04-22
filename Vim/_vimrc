@@ -26,6 +26,7 @@ Bundle 'gmarik/vundle'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'ervandew/supertab'
 Bundle 'scrooloose/nerdtree'
+"Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'godlygeek/tabular'
 Bundle 'pangloss/vim-javascript'
@@ -103,6 +104,7 @@ if has("gui_running")
   if has("gui_gtk2")
     " To install: sudo apt-get install ttf-inconsolata
     set guifont=Inconsolata\ Medium\ 15
+    "Next generation of Powerline only works properly under Consolas...
   elseif has("x11")
     " Also for GTK 1
     set guifont=*-lucidatypewriter-medium-r-normal-*-*-180-*-*-m-*-*
