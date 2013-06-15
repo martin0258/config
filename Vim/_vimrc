@@ -33,6 +33,7 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'aperezdc/vim-template'
 Bundle 'Yggdroot/indentLine'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'klen/python-mode'
 Bundle 'derekmcloughlin/gvimfullscreen_win32'
 Bundle 'terryma/vim-multiple-cursors'
 " vim-scripts repos
