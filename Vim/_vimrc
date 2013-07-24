@@ -216,19 +216,6 @@ set foldcolumn=1
 highlight Folded guibg=darkgrey guifg=yellow
 highlight FoldColumn guibg=darkgrey guifg=white
 
-"Status line power up, now using vim-powerline plugin!
-set laststatus=2
-"set statusline=%4*%<\ %1*[%F]
-"set statusline+=%4*\ %5*[%{&encoding} " encoding
-"set statusline+=%{&fileformat}%{\"\".((exists(\"+bomb\")\ &&\ &bomb)?\",BOM\":\"\").\"\"}]%m
-"set statusline+=%4*%=\ %6*%y%4*\ %3*%l%4*,\ %3*%c%4*\ \<\ %2*%P%4*\ \>
-highlight User1 guifg=red
-highlight User2 gui=underline guifg=green
-highlight User3 gui=underline guifg=yellow
-highlight User4 gui=underline guifg=white
-highlight User5 guifg=cyan
-highlight User6 guifg=white
-
 "Enable code highlight in a block
 function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
   let ft=toupper(a:filetype)
@@ -281,14 +268,6 @@ if !exists("autocommands_loaded")
     au BufRead,BufNewFile *.m call matchadd("matlabStatement", "endif", custom_priority)
     au BufRead,BufNewFile *.m call matchadd("matlabStatement", "endwhile", custom_priority)
     au BufRead,BufNewFile *.m call matchadd("matlabStatement", "endfunction", custom_priority)
-
-    au TabEnter,BufNew,BufWinEnter,WinEnter *.txt let txtmatch = []
-    au TabEnter,BufNew,BufWinEnter,WinEnter *.txt call add(txtmatch, matchadd("Special", "\\(^\\|\\( \\+\\)\\)[0-9]\\+\\..*$", custom_priority))
-    au TabEnter,BufNew,BufWinEnter,WinEnter *.txt call add(txtmatch, matchadd("VisualNOS", "\\(^\\|\\( \\+\\)\\)[A-Z]\\{1,1\\}\\..*$", custom_priority))
-    " Here is for reading dialog in Skype
-    au BufNew,BufWinEnter *.txt call add(txtmatch, matchadd("User2", "Person1:", custom_priority))
-    au BufNew,BufWinEnter *.txt call add(txtmatch, matchadd("User3", "Person2:", custom_priority))
-    au BufLeave *.txt call Deletematch(txtmatch)
 
     au BufEnter * silent! lcd %:p:h "change working directory
   augroup END
@@ -533,13 +512,6 @@ hi TabLineMore       cterm=underline ctermfg=White ctermbg=236   gui=underline g
 hi TabLineSplitNr    cterm=underline ctermfg=148 ctermbg=240   gui=underline,italic guifg=#afd700   guibg=#6c6c6c
 hi TabLineSplitNrSel cterm=NONE      ctermfg=148 ctermbg=236   gui=NONE,italic      guifg=#afd700   guibg=#303030
 "End of setting tabline
-
-"My function to delete a list of match
-function! Deletematch(matchList)
-  for i in (a:matchList)
-    silent! call matchdelete(i)
-  endfor 
-endfunction
 
 " function to search in visual block
 function! RangeSearch(direction)
