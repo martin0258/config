@@ -36,6 +36,7 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'klen/python-mode'
 Bundle 'derekmcloughlin/gvimfullscreen_win32'
 Bundle 'terryma/vim-multiple-cursors'
+Bundle 'altercation/vim-colors-solarized'
 " vim-scripts repos
 Bundle 'fontsize.vim'
 Bundle 'repmo.vim'
@@ -51,7 +52,9 @@ Bundle 'delimitMate.vim'
 filetype plugin indent on   
 "-------------- End of settings of Vundle -----------
 
-colorscheme torte
+syntax enable
+set background=dark
+colorscheme solarized   "From plugin altercation/vim-colors-solarized
 set fencs=ucs-bom,utf-8,big5,euc-jp,gbk,euc-kr,utf-bom,iso8859-1,utf-16le
 let $LANG='zh_TW.UTF-8'
 set langmenu=zh_tw.utf-8
@@ -197,13 +200,13 @@ map <C-]> viwy:tab tag <C-R>"<CR>
 "Need NERDTree plugin first
 map <F2> :NERDTreeToggle<CR>
 
-"Define our own highlight group
+" Define our own highlight group
+"highlight Comment guibg=blue guifg=white ctermfg=gray ctermbg=darkblue
 " We must shorten the cursor highlight group to let command-T works!
-highlight clear Cursor
-highlight Cursor gui=bold guifg=Black guibg=Green
-highlight Comment guibg=blue guifg=white ctermfg=gray ctermbg=darkblue
-highlight clear CursorLine
-highlight CursorLine guibg=Grey30 ctermbg=238
+"highlight clear Cursor
+"highlight Cursor gui=bold guifg=Black guibg=Green
+"highlight clear CursorLine
+"highlight CursorLine guibg=Grey30 ctermbg=238
 "highlight CursorLine term=underline cterm=underline gui=underline guibg=Gray
 
 "Highlight tab so we can know the indent of new code
