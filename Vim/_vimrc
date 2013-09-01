@@ -76,6 +76,7 @@ set winaltkeys=no
 set t_Co=256
 set ambiwidth=double
 set cursorline
+set laststatus=2
 set nrformats=octal,hex,alpha
 set tabpagemax=30
 set nowrap
