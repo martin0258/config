@@ -49,6 +49,7 @@ Bundle 'Mark--Karkat'
 Bundle 'Command-T'
 Bundle 'delimitMate.vim'
 "Bundle 'AutoClose'
+Bundle 'ctrlp.vim'
 filetype plugin indent on   
 "-------------- End of settings of Vundle -----------
 
