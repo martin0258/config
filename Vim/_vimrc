@@ -13,45 +13,49 @@ let g:mwAutoSaveMarks = 1
 let g:mwAutoLoadMarks = 1
 let g:vundle_default_git_proto = 'http'
 
-"------------- Start of settings of Vundle -----------
+"------------- Start of Vundle's settings -----------
 "set langmenu=zh_tw.utf-8
+set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 " My Bundles here:
 " original repos on github
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'ervandew/supertab'
-Bundle 'scrooloose/nerdtree'
-"Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'godlygeek/tabular'
-Bundle 'pangloss/vim-javascript'
-Bundle 'aperezdc/vim-template'
-Bundle 'Yggdroot/indentLine'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'klen/python-mode'
-Bundle 'derekmcloughlin/gvimfullscreen_win32'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'altercation/vim-colors-solarized'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'ervandew/supertab'
+Plugin 'scrooloose/nerdtree'
+"Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'godlygeek/tabular'
+Plugin 'pangloss/vim-javascript'
+Plugin 'aperezdc/vim-template'
+Plugin 'Yggdroot/indentLine'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'klen/python-mode'
+Plugin 'derekmcloughlin/gvimfullscreen_win32'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'altercation/vim-colors-solarized'
 " vim-scripts repos
-Bundle 'fontsize.vim'
-Bundle 'repmo.vim'
-Bundle 'taglist.vim'
-Bundle 'snipMate'
-Bundle 'surround.vim'
-Bundle 'ZoomWin'
+Plugin 'fontsize.vim'
+Plugin 'repmo.vim'
+Plugin 'taglist.vim'
+Plugin 'snipMate'
+Plugin 'surround.vim'
+Plugin 'ZoomWin'
 "Bundle 'SearchComplete' Bug when using replacement
-Bundle 'Mark--Karkat'
-Bundle 'Command-T'
-Bundle 'delimitMate.vim'
-"Bundle 'AutoClose'
-Bundle 'ctrlp.vim'
+Plugin 'Mark--Karkat'
+Plugin 'Command-T'
+Plugin 'delimitMate.vim'
+"Plugin 'AutoClose'
+Plugin 'ctrlp.vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()
 filetype plugin indent on   
-"-------------- End of settings of Vundle -----------
+"-------------- End of Vundle's settings -----------
 
 syntax enable
 set background=dark
