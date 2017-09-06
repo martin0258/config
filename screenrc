@@ -1,0 +1,70 @@
+# ctrl - '->' => next screen
+bindkey "^[[C" next
+bindkey "^[[1;5C" next
+# ctrl - '<-' => pre screen
+bindkey "^[[1;5D" prev
+bindkey "^[[D" prev
+shelltitle '] |bash'
+#backtick 1 60 60 ./gettem.py
+#hardstatus alwayslastline "%{Yk}%-w%{Yk}%n %t%{-}%+w %=%{.w}"
+#hardstatus alwayslastline "%{=b kr}%-Lw%{=b ky}%n %t%{-}%+Lw%{=b kg}%=%1`"
+#caption always "%n(%t) : %C"
+#hardstatus alwayslastline "%{=b kr}%-Lw%{=b ky}%n %t%{-}%+Lw"
+shell -${SHELL}
+caption always "%{=b kr}%-Lw%{=b ky}%n %t%{-}%+Lw"
+#hardstatus alwayslastline "%{rk}%H %{gk}%c %{yk}%M%d%{=b kg}%M%d%50=%H%=%c"
+hardstatus alwayslastline "%{=b kr}%H %{=b kg}%c %{=b ky}%M%d%{=b kk}"
+
+#termcapinfo xterm `Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm`
+
+# when open screen, open ptt, ptt2, and a screen "SAS" for work
+#screen -t ptt ssh -C bbs@ptt.cc
+#screen -t ptt2 ssh -C bbs@ptt2.cc
+#screen -t irc irssi -c irc.seed.net.tw -n sasbluesea
+#screen -t SAS
+
+#hardstatus alwayslastline "%{=b ky}%-Lw%{=b kr}%n %t%{-}%+Lw"
+#hardstatus alwayslastline "%?%{ky}%:fff%?%n*%f %t%?(%u)%?%?%+Lw%?"
+#hardstatus alwayslastline "%{wb}%1`%= %{+b ky}qq"
+
+bind = resize =
+bind + resize +1
+bind - resize -1
+bind _ resize max
+
+
+register [ "\033:se noai\015a"
+register ] "\033:se ai\015a"
+bind ^] paste [.]
+
+
+defscrollback 5000
+
+
+# ctrl-a - 1 => screen 11
+# ctrl-a - - 1 => screen 21
+bind - command -c select_1n
+bind -c select_1n 0 select 10
+bind -c select_1n 1 select 11
+bind -c select_1n 2 select 12
+bind -c select_1n 3 select 13
+bind -c select_1n 4 select 14
+bind -c select_1n 5 select 15
+bind -c select_1n 6 select 16
+bind -c select_1n 7 select 17
+bind -c select_1n 8 select 18
+bind -c select_1n 9 select 19
+bind -c select_1n - command -c select_2n
+bind -c select_2n 0 select 20
+bind -c select_2n 1 select 21
+bind -c select_2n 2 select 22
+bind -c select_2n 3 select 23
+bind -c select_2n 4 select 24
+bind -c select_2n 5 select 25
+bind -c select_2n 6 select 26
+bind -c select_2n 7 select 27
+bind -c select_2n 8 select 28
+bind -c select_2n 9 select 29
+bind -c select_2n - select -
+
+vbell off
