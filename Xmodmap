@@ -1,0 +1,5 @@
+!map Numlock
+keycode 80 = Up
+keycode 83 = Left
+keycode 85 = Right
+keycode 88 = Down
