@@ -1,5 +1,11 @@
+!map fcitx-chewing
+keycode 51 = apostrophe backslash
 !map Numlock
 keycode 80 = Up
 keycode 83 = Left
 keycode 85 = Right
 keycode 88 = Down
+keycode 79 = Home
+keycode 87 = End
+keycode 81 = Prior
+keycode 89 = Next
